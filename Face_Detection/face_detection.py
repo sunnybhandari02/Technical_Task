@@ -22,16 +22,25 @@ class Face_Detect:
         face_classifier = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
         self.gray = cv2.cvtColor(self.img, cv2.COLOR_BGR2GRAY)      # convert image into grayscale for processing
         faces = face_classifier.detectMultiScale(self.gray, 1.0485258, 6)
-        if faces is ():
+        if faces == ():
             print("No faces found")
         for (x,y,w,h) in faces:
             cv2.rectangle(self.img, (x,y), (x+w,y+h), (130,0,15), 3)
+
+    def rotate_image(self):     # function to rotate image 90 degree
+        self.img = cv2.rotate(self.img,cv2.ROTATE_90_CLOCKWISE)
+
+    def save_image(self):       # function to save image in the disk
+        cv2.imwrite("NewImage.jpg",self.img)
+
 
 
 def main():
     obj = Face_Detect('C:/Users/User/Desktop/Internship/Face_Detection/sample.jpg')
     # obj.resize_image()
     obj.face_detection()
+    obj.rotate_image()
     obj.show_image()
+    obj.save_image()
 
 main()
